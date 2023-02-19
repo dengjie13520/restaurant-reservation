@@ -5,6 +5,9 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver,ApolloDriverConfig  } from '@nestjs/apollo'
 import { ReservationModule } from './business/reservation/reservation.module'
 import { MongooseModule } from '@nestjs/mongoose'
+import { AuthModule } from './libs/auth/auth.module'
+import { LoginModule } from './business/login/login.module'
+import { TableModule } from './business/table/table.module'
 
 const graphQLOptions = {
   autoSchemaFile: true,
@@ -16,7 +19,13 @@ const graphQLOptions = {
   driver: ApolloDriver,
 }
 @Module({
-  imports: [ GraphQLModule.forRoot<ApolloDriverConfig>(graphQLOptions),ReservationModule,MongooseModule.forRoot('mongodb://localhost:27017/test')],
+  imports: [ 
+    GraphQLModule.forRoot<ApolloDriverConfig>(graphQLOptions),
+    ReservationModule,
+    MongooseModule.forRoot('mongodb://localhost:27017/test'),
+    AuthModule,
+    LoginModule,
+    TableModule,],
   controllers: [AppController],
   providers: [AppService],
 })

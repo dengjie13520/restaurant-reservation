@@ -31,6 +31,7 @@
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-tools": "^8.3.18",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
