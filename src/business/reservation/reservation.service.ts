@@ -25,24 +25,47 @@ export class ReservationService {
     }
 
     async reserveTable(info:ReserveInfoArgs,user:any):Promise<string>{
-        if(!info.orderNo){
+
+        let allReserve = await this.mongoService.findAllReserve()
+        for(let i=0;i<allReserve.length;i++){
+
+            if(allReserve[i].tableNo == info.tableNo && allReserve[i].startTime == info.startTime && allReserve[i].status == 1){
+                if(!info.orderNo){
+                    return 'tableHaveOtherOrderNo'
+                }else if(allReserve[i].orderNo != info.orderNo){
+                    return 'tableHaveOtherOrderNo'
+                }
+            }
+        }
+
+        if(!info.orderNo && user.role == 'guest'){
+            if(info.status != 1){
+                return 'statusError'  
+            }
             let newOrderNo = getRandomString()
-            let normalFlag = 1; // 0:cancel,1:normal,2:complete
             await this.mongoService.createReserve({
                 orderNo:newOrderNo,
                 guestId:user.guestId,
                 tableNo:info.tableNo,
                 startTime:info.startTime,
-                status:normalFlag
+                status:info.status
             })
-            return 'create'
+            return `create:${newOrderNo}`
         }
         const result = await this.mongoService.findReserveByOrderNo(info.orderNo)
-        if(result.length>0){
+        if(result.length == 0){
+            return 'noOrder'
+        }
+        if(result.length>0 && user.role == 'guest' && (info.status == 0 || info.status == 1)){
             await this.mongoService.updateReserve(info)
             return 'update'           
+        }else if(result.length>0 && user.role == 'admin'  && (info.status == 0 || info.status == 1 || info.status == 2)){
+            await this.mongoService.updateReserve(info)
+            return 'update'  
+        }else{
+            return 'statusError'  
         }
-        return 'noOrder'
+        
     }
 
     async searchReserve(user:any,date:string,status:number):Promise<ReserveObj[]>{

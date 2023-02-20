@@ -23,8 +23,8 @@ export class LoginResolver {
         return await this.loginService.registerAdmin(req)
     }
 
-    @Mutation((returns) => RegisterResultObj, { nullable: true, name: 'loginGuest', description: '客户登录' })
-    async loginGuest(
+    @Mutation((returns) => RegisterResultObj, { nullable: true, name: 'login', description: '登录' })
+    async login(
         @Args({ name: 'ReserveInfoArgs', nullable: true, description: '注册信息', type: () => LoginInfoArgs })
         req: LoginInfoArgs
     ): Promise<RegisterResultObj> {

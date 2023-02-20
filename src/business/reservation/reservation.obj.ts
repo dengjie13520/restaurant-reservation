@@ -2,13 +2,13 @@ import { ObjectType, Field, ID, InputType } from '@nestjs/graphql'
 
 @InputType({ description: '预约入参信息' })
 export class ReserveInfoArgs {
-    @Field((type) => String, { nullable: true, description: '预约订单号' })
+    @Field((type) => String, { nullable: true, description: '预约订单号,更新时需要传入值' })
     orderNo: string
 
     @Field((type) => String, { nullable: true, description: '桌子No' })
     tableNo: string
 
-    @Field((type) => String, { nullable: true, description: '预约时间,morning,noon,afternoon,evening' })
+    @Field((type) => String, { nullable: true, description: '预约时间,morning,noon,afternoon,evening,可自定义' })
     startTime: string
 
     @Field((type) => Number, { nullable: true, description: '预约状态:0关闭/取消,1正常,2完成' })
