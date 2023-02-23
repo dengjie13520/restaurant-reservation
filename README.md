@@ -17,6 +17,12 @@ need install mongo(localhost:27017)  without auth
 # development
 $ yarn run start
 
+# index.html
+
+http://localhost:3000
+或项目的view里的index.html可以直接打开访问
+首页访问后端的地址是固定的，后端地址变更后需要更改index.html地址变量rootUrl,默认访问"http://localhost:3000/graphql"
+
 #  graphql
 http://localhost:3000/graphql
 
