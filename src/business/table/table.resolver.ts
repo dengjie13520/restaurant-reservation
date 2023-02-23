@@ -26,6 +26,22 @@ export class TableResolver {
     }
 
     @UseGuards(AuthGuard)
+    @Mutation((returns) => String, { nullable: true, name: 'deleteTable', description: 'delete table' })
+    async deleteTable(
+        @Context() context:any,
+        @Args({ name: 'tableNo', nullable: true, description: '桌子No', type: () => String })
+        tableNo: string
+    ): Promise<string> {
+        const auth = context.req.headers.authorization
+        const user = await this.authService.decodeUserToken(auth)
+        console.log(user.role)
+        if(user.role != 'admin'){
+            return 'notAdmin'
+        }
+        return await this.tableService.deleteTable(tableNo)
+    }
+
+    @UseGuards(AuthGuard)
     @Query((returns) => [TableObj], { nullable: true, name: 'getTableList', description: '获取桌子' })
     async getTableList(
     ): Promise<TableObj[]> {

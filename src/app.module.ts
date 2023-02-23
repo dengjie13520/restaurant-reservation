@@ -18,11 +18,13 @@ const graphQLOptions = {
   introspection: true,
   driver: ApolloDriver,
 }
+const mongoUrl = process.env["MONGO_URL"] || 'mongodb://localhost:27017/test'
+console.log('------start------'+mongoUrl)
 @Module({
   imports: [ 
     GraphQLModule.forRoot<ApolloDriverConfig>(graphQLOptions),
     ReservationModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/test'),
+    MongooseModule.forRoot(mongoUrl),
     AuthModule,
     LoginModule,
     TableModule,],

@@ -22,6 +22,12 @@ export class TableService {
         return 'ok'
     }
 
+    async deleteTable(tableNo:string):Promise<string>{
+        await this.mongoService.deleteTable(tableNo)
+        return 'ok'
+    }
+
+
     async getTableList():Promise<TableObj[]>{
        return await this.mongoService.findAllTable()
     }

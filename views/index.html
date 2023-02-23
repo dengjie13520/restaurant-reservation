@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>reserve table</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/jquery.js"></script>
+</head>
+<body>
+    
+<h1>Welcome</h1>
+<p id="welcome_title">First Login/Register Please</p>
+<div id="show_button" style="visibility:hidden">&nbsp;<button onclick="gotoTable()">show table</button>&nbsp;&nbsp;<button onclick="gotoReserve()">show order</button></div>
+<div id = "div_login">
+    <p>Login</p>
+    <table>
+        <tr>
+            <td>account:</td>
+            <td><input id="login_account" type="text" name="account"></td>
+        </tr>
+        <tr>
+            <td>password:</td>
+            <td><input id="login_password" type="password" name="password"></td>
+        </tr>
+    </table>
+        <br>
+        <button onclick="testLogin()" type="button">login</button><br>
+        <br>
+        <button onclick="gotoRegisterGuest()">register guest</button>
+        <button onclick="gotoRegisterAdmin()">register admin</button>
+
+</div>
+<div id = "div_register" style="visibility:hidden">
+    <p id = "register_title">Register</p>
+    <table>
+        <tr>
+            <td>Account:</td>
+            <td><input id="register_account" type="text" name="account"></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input id="register_password" type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td>Confirm Password:</td>
+            <td><input id="register_password_two" type="password" name="password"></td>
+        </tr>
+        <tr id = "tr_name">
+            <td>name:</td>
+            <td><input id="register_name" type="text" name="name"></td>
+        </tr>
+        <tr id = "tr_contractInfo">
+            <td>contract:</td>
+            <td><input id="register_contractInfo" type="text" name="ContractInfo"></td>
+        </tr>
+    </table>
+    <br>
+    <button onclick="testRegister()">Register</button><br>
+    <br>
+    <button onclick="gotoReturn()">Return</button>
+</div>
+
+<div id = "div_table" style="visibility:hidden">
+    <div>
+        <p>table list</p>
+        <div id="div_button_new_table_add">
+            <button onclick="gotoAddNewTable()">new table</button><br>
+        </div>
+        <ul id="table_list">
+
+        </ul>
+    </div>
+    <br>
+
+    <br>
+
+</div>
+
+<div id = "div_reserve" style="visibility:hidden">
+    <div>
+        <p>reserve list</p>
+        <div id="search_tool">
+            date:<input id="search_date" type="date"  >
+            time:<select id="search_time" size="1">
+                    <option>all</option>
+                    <option>morning</option>
+                    <option>noon</option>
+                    <option>afternoon</option>
+                    <option>evening</option>
+            </select>
+            status:
+            <select id="search_status" size="1">
+                    <option>all</option>
+                    <option>cancel</option>
+                    <option>normal</option>
+                    <option>complete</option>
+            </select>
+            <button onclick="gotoSearchReserve()">search</button>
+        </div>
+
+        <ul id="reserve_list">
+
+        </ul>
+    </div>
+    <br>
+
+    <br>
+
+</div>
+
+<div id="div_reserve_detail" style="visibility:hidden">
+    <table >
+        <tr>
+            <td>tableNo:</td>
+            <td><input id="detail_tableNo" type="text" name="detail_tableNo" disabled></td>
+        </tr>
+        <tr>
+            <td>date:</td>
+            <td><input id="detail_date" type="text" name="detail_date"  disabled ></td>
+        </tr>
+        <tr>
+            <td>table name:</td>
+            <td><input id="detail_tableName" type="text" name="detail_tableName" disabled></td>
+        </tr>
+        <tr>
+            <td>table size:</td>
+            <td><input id="detail_tableSize" type="text" name="detail_tableSize" disabled></td>
+        </tr>
+        <tr >
+            <td>status:</td>
+            <td><input id="detail_status" type="text" name="detail_status" disabled></td>
+        </tr>
+        <tr >
+            <td>name:</td>
+            <td><input id="detail_name" type="text" name="detail_name" disabled></td>
+        </tr>
+        <tr >
+            <td>contract Info:</td>
+            <td><input id="detail_contractInfo" type="text" name="detail_contractInfo" disabled></td>
+        </tr>
+    </table>
+    <button onclick="hiddenDetail()">put these infos away</button>
+</div>
+
+<div id="div_table_add" style="visibility:hidden">
+    <table >
+        <tr>
+            <td>tableNo:</td>
+            <td><input id="add_tableNo" type="text" name="account"></td>
+        </tr>
+        <tr>
+            <td>name:</td>
+            <td><input id="add_tableName" type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>size:</td>
+            <td><input id="add_tableSize" type="text" name="size"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button onclick="addTable()">Confirm to add table</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button onclick="gotoCancelToAddTable()">Cancel</button></td>
+        </tr>
+    </table>
+    
+</div>
+
+<div id="div_reserve_add" style="visibility:hidden">
+    <table >
+        <tr>
+            <td>tableNo:</td>
+            <td><input id="reserve_tableNo" type="text" name="tableNo" disabled></td>
+        </tr>
+        <tr>
+            <td>date:</td>
+            <td><input type="date" id="reserve_tableDate" ></td>
+        </tr>
+        <tr>
+            <td>time:</td>
+            <td><select id="reserve_tableTime" size="1">
+                <option>morning</option>
+                <option>noon</option>
+                <option>afternoon</option>
+                <option>evening</option>
+            </select></td>
+        </tr>
+    </table>
+    <button onclick="reserveTable()">confirm reserve this table</button>
+</div>
+
+
+
+<script>
+    const rootUrl = "http://localhost:3000/graphql"
+    let registerRole = 'guest'
+    localStorage.removeItem("jwt")
+    function gotoReturn(){
+        clearAllValue()
+        hiddenAllDiv()
+        document.getElementById("div_login").style.visibility = "visible"
+        document.getElementById("div_login").style.display = "inline"
+    }
+
+    function gotoRegisterGuest(){
+        registerRole = 'guest'
+        clearAllValue()
+        hiddenAllDiv()
+        document.getElementById("register_title").innerText = "Register Guest"
+        document.getElementById("div_register").style.visibility = "visible"
+        document.getElementById("div_register").style.display = "inline"
+        document.getElementById("tr_name").style.visibility = "visible"
+        document.getElementById("tr_contractInfo").style.visibility = "visible"
+    }
+
+    function gotoRegisterAdmin(){
+        registerRole = 'admin'
+        clearAllValue()
+        hiddenAllDiv()
+        document.getElementById("register_title").innerText = "Register Admin"
+        document.getElementById("div_register").style.visibility = "visible"
+        document.getElementById("div_register").style.display = "inline"
+        document.getElementById("tr_name").style.visibility = "hidden"
+        document.getElementById("tr_contractInfo").style.visibility = "hidden"
+    }
+    function gotoReserveTable(my){
+        console.log('my tableNo:'+my.value)
+        my.after(document.getElementById("div_reserve_add"))
+        document.getElementById("reserve_tableNo").value = my.value
+        document.getElementById("div_reserve_add").style.visibility = "visible"
+        document.getElementById("div_reserve_add").style.display="inline"
+        document.getElementById("reserve_tableDate").value = getMyDate()
+        document.getElementById("reserve_tableDate").min = getMyDate()
+        document.getElementById("reserve_tableDate").max = getMyMaxDate()
+        document.getElementById("reserve_tableTime").value = "evening"
+        console.log(getMyDate())
+        console.log(getMyMaxDate())
+    }
+    function gotoAddNewTable(){
+        let addButton = document.getElementById("div_button_new_table_add")
+        addButton.after(document.getElementById("div_table_add"))
+        document.getElementById("div_table_add").style.visibility = "visible"
+        document.getElementById("div_table_add").style.display = "inline"
+    }
+    function gotoCancelToAddTable(){
+        document.getElementById("div_table_add").style.visibility = "hidden"
+        document.getElementById("div_table_add").style.display = "none"
+    }
+    function gotoTable(){
+        clearAllValue()
+        hiddenAllDiv()
+        document.getElementById("show_button").style.visibility = "visible"
+        document.getElementById("div_table").style.visibility = "visible"
+        document.getElementById("div_table").style.display = "inline"
+        console.log("registerRole:"+registerRole)
+        if(registerRole == "guest"){
+            document.getElementById("div_button_new_table_add").style.visibility = "hidden"
+            document.getElementById("div_button_new_table_add").style.display = "none"
+        }
+        document.getElementById("welcome_title").innerText = `Hello,${registerRole},nice to meet you!`
+        getAllTables((tableList)=>{
+            if(tableList.length == 0){
+                alert("call admin to add table")
+            }
+            for(let  i=0;i<tableList.length;i++){
+                let x = document.createElement("LI");
+                if(registerRole == "guest"){
+                    x.innerHTML = `tableNo:${tableList[i].tableNo},name:${tableList[i].name},size:${tableList[i].size}      <button onclick="gotoReserveTable(this)" value = "${tableList[i].tableNo}">reserve</button>`
+                }else{
+                    x.innerHTML = `tableNo:${tableList[i].tableNo},name:${tableList[i].name},size:${tableList[i].size} <button onclick="deleteTable(this)" value = "${tableList[i].tableNo}">delete</button>` 
+                }
+               
+                document.getElementById("table_list").appendChild(x)
+                let y = document.createElement("BR");
+                document.getElementById("table_list").appendChild(y)
+            }
+
+        })
+    }
+
+    function gotoReserve(){
+        clearAllValue()
+        hiddenAllDiv()
+        document.getElementById("div_reserve").style.visibility = "visible"
+        document.getElementById("div_reserve").style.display = "inline"
+        console.log("registerRole:"+registerRole)
+        if(registerRole == "guest"){
+            document.getElementById("search_tool").style.visibility = "hidden"
+            document.getElementById("search_tool").style.display = "none"
+        }else{
+            document.getElementById("search_tool").style.visibility = "visible"
+            document.getElementById("search_tool").style.display = "inline"
+        }
+        document.getElementById("welcome_title").innerText = `Hello,${registerRole},nice to meet you!`
+        getAllReserve((reserveList)=>{
+            if(reserveList.length == 0){
+                alert("no reserve")
+            }
+            for(let  i=0;i<reserveList.length;i++){
+                let x = document.createElement("LI");
+                if(registerRole == "guest"){
+                    x.innerHTML = `orderNo:${reserveList[i].orderNo}<br>tableNo:${reserveList[i].tableNo}<br>time:${reserveList[i].startTime}<br>status:${convertStatus(reserveList[i].status)} <br><button onclick="cancelReserve(this)" value = "${reserveList[i].orderNo}">cancel</button>`
+                }else{
+                    x.innerHTML = `orderNo:${reserveList[i].orderNo}<br>tableNo:${reserveList[i].tableNo}<br>time:${reserveList[i].startTime}<br>status:${convertStatus(reserveList[i].status)} <br><button onclick="cancelReserve(this)" value = "${reserveList[i].orderNo}">cancel</button> <button onclick="completeReserve(this)" value = "${reserveList[i].orderNo}">complete</button> <button onclick="showDetail(this)" value = "${reserveList[i].orderNo}">detail</button>`
+                }
+               
+                document.getElementById("reserve_list").appendChild(x)
+                let y = document.createElement("BR");
+                document.getElementById("reserve_list").appendChild(y)
+            }
+        })
+    }
+
+    function gotoSearchReserve(){
+        clearAllValue()
+        hiddenAllDiv()
+        document.getElementById("div_reserve").style.visibility = "visible"
+        document.getElementById("div_reserve").style.display = "inline"
+        console.log("registerRole:"+registerRole)
+        document.getElementById("welcome_title").innerText = `Hello,${registerRole},nice to meet you!`
+        searchTheServe((reserveList)=>{
+            if(reserveList.length == 0){
+                alert("no reserve")
+            }
+            for(let  i=0;i<reserveList.length;i++){
+                let x = document.createElement("LI");
+                if(registerRole == "guest"){
+                    x.innerHTML = `orderNo:${reserveList[i].orderNo}<br>tableNo:${reserveList[i].tableNo}<br>time:${reserveList[i].startTime}<br>status:${convertStatus(reserveList[i].status)} <br><button onclick="cancelReserve(this)" value = "${reserveList[i].orderNo}">cancel</button>`
+                }else{
+                    x.innerHTML = `orderNo:${reserveList[i].orderNo}<br>tableNo:${reserveList[i].tableNo}<br>time:${reserveList[i].startTime}<br>status:${convertStatus(reserveList[i].status)} <br><button onclick="cancelReserve(this)" value = "${reserveList[i].orderNo}">cancel</button> <button onclick="completeReserve(this)" value = "${reserveList[i].orderNo}">complete</button> <button onclick="showDetail(this)" value = "${reserveList[i].orderNo}">detail</button>`
+                }
+               
+                document.getElementById("reserve_list").appendChild(x)
+                let y = document.createElement("BR");
+                document.getElementById("reserve_list").appendChild(y)
+            }
+        })
+    }
+
+
+    function searchTheServe(callback){
+        let jwt = localStorage.getItem('jwt')
+        let myDate = document.getElementById("search_date").value
+        let myTime = document.getElementById("search_time").value
+        let myStatus = document.getElementById("search_status").value
+
+        let myStatusNum=10
+        if(myStatus == "cancel"){
+            myStatusNum=0
+        }else if(myStatus == "normal"){
+            myStatusNum=1
+        }else if(myStatus == "complete"){
+            myStatusNum=2
+        }
+        let myDateTime = (myDate?myDate:"") +"_"+ (myTime == "all"?"":myTime)
+
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": `query d{\n\tsearchReserveList(date:\"${myDateTime}\",status:${myStatusNum}){\n    status\n    startTime\n    guestId\n    tableNo\n    orderNo\n  }\n}\n`
+            }),
+        };
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            callback(response.data.searchReserveList)
+        });
+    }
+
+    function showDetail(my){
+        console.log('my tableNo:'+my.value)
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": `\nquery d{\n\t\tsearchDetailReserve(orderNo:\"${my.value}\"){\n    status\n    startTime\n    guestId\n    contact\n    name\n    tableNo\n    tableName\n    tableSize\n  }\n}\n`
+            }),
+        };
+        my.after(document.getElementById("div_reserve_detail"))
+        document.getElementById("div_reserve_detail").style.visibility = "visible"
+        document.getElementById("div_reserve_detail").style.display = "inline"
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            document.getElementById("detail_tableNo").value=response.data.searchDetailReserve.tableNo
+            document.getElementById("detail_date").value=response.data.searchDetailReserve.startTime
+            document.getElementById("detail_tableName").value=response.data.searchDetailReserve.tableName
+            document.getElementById("detail_tableSize").value=response.data.searchDetailReserve.tableSize
+            document.getElementById("detail_status").value=convertStatus(response.data.searchDetailReserve.status)
+            document.getElementById("detail_name").value=response.data.searchDetailReserve.name
+            document.getElementById("detail_contractInfo").value=response.data.searchDetailReserve.contact
+
+        });
+    }
+
+    function hiddenDetail(){
+        document.getElementById("div_reserve").after(document.getElementById("div_reserve_detail"))
+        document.getElementById("div_reserve_detail").style.visibility = "hidden"
+        document.getElementById("div_reserve_detail").style.display = "none"
+    }
+
+    function cancelReserve(my){
+        console.log('my tableNo:'+my.value)
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": `\nmutation d{\n\t\treserveTable(ReserveInfoArgs:{orderNo:\"${my.value}\",status:0})\n}\n`
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if(response.data.reserveTable == "update"){
+                alert("cancel order successfully")
+                gotoReserve()
+            }
+        });
+    }
+
+    function completeReserve(my){
+        console.log('my tableNo:'+my.value)
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": `\nmutation d{\n\t\treserveTable(ReserveInfoArgs:{orderNo:\"${my.value}\",status:2})\n}\n`
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if(response.data.reserveTable == "update"){
+                alert("complete order successfully")
+                gotoReserve()
+            }
+        });
+    }
+    function deleteTable(my){
+        console.log('my tableNo:'+my.value)
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": `\nmutation d{\n\tdeleteTable(tableNo:\"${my.value}\")\n}\n`
+            }),
+        };
+        
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            gotoTable()
+        });
+    }
+
+    function addTable(){
+        let tableNo = document.getElementById("add_tableNo").value
+        let tableName = document.getElementById("add_tableName").value
+        let tableSize = document.getElementById("add_tableSize").value
+        if(tableName && tableNo && tableSize){
+        }else{
+            alert('Parameter cannot be empty')
+            return
+        }
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+                },
+            "data": JSON.stringify({
+                "query": `\nmutation d{\n  addTable(tableInfo:{tableNo:\"${tableNo}\",name:\"${tableName}\",size:\"${tableSize}\"})\n}\n`
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if(response.data.addTable == "ok"){
+                alert("Add table successfully")
+                gotoTable()
+                gotoCancelToAddTable()
+            }else if(response.data.addTable == "repeat"){
+                alert("It already exists")
+            }else{
+                alert(response.data.addTable )
+            }
+        });
+    }
+
+    function reserveTable(){
+        let tableNo = document.getElementById("reserve_tableNo").value
+        let tableTime = document.getElementById("reserve_tableDate").value+"_"+document.getElementById("reserve_tableTime").value
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": `\nmutation d{\n  reserveTable(ReserveInfoArgs:{tableNo:\"${tableNo}\",startTime:\"${tableTime}\",status:1})\n}\n`
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if(response.data.reserveTable == "create"){
+                alert("create order successfully")
+                document.getElementById("div_reserve_add").style.visibility = "hidden"
+                document.getElementById("div_reserve_add").style.display = "none"
+            }else if(response.data.reserveTable == "tableHaveOtherOrderNo"){
+                alert("Sorry,this table have another order at this time!")
+            }
+        });
+    }
+
+    function hiddenAllDiv(){
+        document.getElementById("div_login").style.visibility = "hidden"
+        document.getElementById("div_login").style.display = "none"
+        document.getElementById("div_register").style.visibility = "hidden"
+        document.getElementById("div_register").style.display = "none"
+        document.getElementById("div_table").style.visibility = "hidden"
+        document.getElementById("div_table").style.display = "none"
+        document.getElementById("div_reserve").style.visibility = "hidden"
+        document.getElementById("div_reserve").style.display = "none"
+        document.getElementById("div_reserve_detail").style.visibility = "hidden"
+        document.getElementById("div_reserve_detail").style.display = "none"
+
+    }
+    function clearAllValue(){
+        document.getElementById("div_reserve").after(document.getElementById("div_reserve_detail"))
+        document.getElementById("login_account").value = ""
+        document.getElementById("login_password").value = ""
+        document.getElementById("register_account").value = ""
+        document.getElementById("register_password").value = ""
+        document.getElementById("register_password_two").value = ""
+        document.getElementById("register_name").value = ""
+        document.getElementById("register_contractInfo").value = ""
+        document.getElementById("table_list").innerHTML = ""
+        document.getElementById("reserve_list").innerHTML = ""
+    }
+
+    function getAllTables(callback){
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+        "url": rootUrl,
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "authorization":jwt
+        },
+        "data": JSON.stringify({
+            "query": "\nquery d{\n\tgetTableList{\n    tableNo\n    name\n    size\n  }\n}\n"
+        }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            callback(response.data.getTableList)
+        });
+    }
+
+    function getAllReserve(callback){
+        let jwt = localStorage.getItem('jwt')
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "authorization":jwt
+            },
+            "data": JSON.stringify({
+                "query": "\nquery d{\n  searchReserveList{\n    guestId\n    orderNo\n    startTime\n    status\n    tableNo\n  }\n}\n"
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            callback(response.data.searchReserveList)
+        });
+    }
+
+    function testLogin(){
+        let account = document.getElementById("login_account").value
+        let password = document.getElementById("login_password").value
+        if(account && password){
+        }else{
+            alert('Parameter cannot be empty')
+            return
+        }
+        var settings = {
+            "url": rootUrl,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            "data": JSON.stringify({
+                "query": `\nmutation d{\n  login(ReserveInfoArgs:{account:\"${account}\",password:\"${password}\"}){\n    message\n    success\n    jwt\n  }\n}\n`
+            }),
+        };
+        console.log(settings)
+        $.ajax(settings).done(function (response) {
+            console.log(response.data.login.success);
+            console.log(response.data.login.message);
+            console.log(response.data.login.jwt);
+            if(!response.data.login.success){
+                alert(response.data.login.message)
+                return
+            }
+            localStorage.setItem('jwt',response.data.login.jwt)
+            registerRole = response.data.login.message
+            alert("login success")
+            gotoTable()
+        });
+    }
+
+    function testRegister(){
+        let account = document.getElementById("register_account").value
+        let password = document.getElementById("register_password").value
+        let passwordTwo = document.getElementById("register_password_two").value
+        let name = document.getElementById("register_name").value
+        let contractInfo = document.getElementById("register_contractInfo").value
+        if(registerRole == 'guest'){
+            if(account && password && passwordTwo && name && contractInfo){
+                if(password != passwordTwo){
+                    alert('Confirm Password is different to Password')
+                }else{
+                    let settings = {
+                        "url": rootUrl,
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                    },
+                    "data": JSON.stringify({
+                        "query": `\nmutation d{\n\tregisterGuest(ReserveInfoArgs:{account:\"${account}\",name:\"${name}\",password:\"${password}\",contractInfo:\"${contractInfo}\"}){\n    success\n    message\n    jwt\n  }\n}\n`
+                    }),
+                    };
+                    $.ajax(settings).done(function (response) {
+                        console.log(response.data.registerGuest.success);
+                        console.log(response.data.registerGuest.message);
+                        console.log(response.data.registerGuest.jwt);
+                        if(!response.data.registerGuest.success){
+                            alert(response.data.registerGuest.message)
+                            return
+                        }
+                        localStorage.setItem('jwt',response.data.registerGuest.jwt)
+                        registerRole = response.data.registerGuest.message
+                        alert("login success")
+                        gotoTable()
+                    });
+            }
+            }else{
+                alert('Parameter cannot be empty')
+            }
+        }else{
+            if(account && password && passwordTwo){
+                if(password != passwordTwo){
+                    alert('Confirm Password is different to Password')
+                }else{
+                    let settings = {
+                        "url": rootUrl,
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                        },
+                        "data": JSON.stringify({
+                            "query": `\nmutation d{\n\tregisterAdmin(ReserveInfoArgs:{account:\"${account}\",password:\"${password}\"}){\n    success\n    message\n    jwt\n  }\n}\n`
+                        }),
+                    };
+                    console.log(settings)
+                    $.ajax(settings).done(function (response) {
+                        console.log(response)
+                        console.log(response.data.registerAdmin.success);
+                        console.log(response.data.registerAdmin.message);
+                        console.log(response.data.registerAdmin.jwt);
+                        if(!response.data.registerAdmin.success){
+                            alert(response.data.registerAdmin.message)
+                            return
+                        }
+                        localStorage.setItem('jwt',response.data.registerAdmin.jwt)
+                        registerRole = response.data.registerAdmin.message
+                        alert("login success")
+                        gotoTable()
+                    });
+                }
+            }
+        }
+    }
+
+    function getMyDate(){
+        let myD = new Date()
+        let myMaxD = new Date(myD.getTime()+24*60*60*1000)
+        let myMonth = myMaxD.getMonth()+1<10?"0"+(myMaxD.getMonth()+1):myMaxD.getMonth()+1
+        let myDay = myMaxD.getDate()<10?"0"+myMaxD.getDate():myMaxD.getDate()
+        let myDate = `${myMaxD.getFullYear()}-${myMonth}-${myDay}`
+        return myDate
+    }
+    function getMyMaxDate(){
+        let myD = new Date()
+        let myMaxD = new Date(myD.getTime()+7*24*60*60*1000)
+        let myMonth = myMaxD.getMonth()+1<10?"0"+(myMaxD.getMonth()+1):myMaxD.getMonth()+1
+        let myDay = myMaxD.getDate()<10?"0"+myMaxD.getDate():myMaxD.getDate()
+        let myDate = `${myMaxD.getFullYear()}-${myMonth}-${myDay}`
+        return myDate
+    }
+    function convertStatus(status){
+        if(status == 0){
+            return 'cancel'
+        }else if(status == 1){
+            return 'normal'
+        }else{
+            return 'complete'
+        }
+    }
+</script>
+
+</body>
+</html>

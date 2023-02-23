@@ -50,7 +50,7 @@ export class ReservationService {
                 startTime:info.startTime,
                 status:info.status
             })
-            return `create:${newOrderNo}`
+            return `create`
         }
         const result = await this.mongoService.findReserveByOrderNo(info.orderNo)
         if(result.length == 0){
@@ -73,11 +73,16 @@ export class ReservationService {
             const result = await this.mongoService.findReserveByGuestId(user.guestId)
             return result
         }
-        if(date){
-            return await this.mongoService.findReserveByDate(date)
-        }
-        if(status || status === 0){
-            return await this.mongoService.findReserveByStatus(status)
+        console.log('-----------------------user------')
+        console.log(user)
+        console.log('-----------------------data_status------')
+        console.log(date)
+        console.log(status)
+        if(date && (status || status ==0)){
+            if(status == 10){
+                return await this.mongoService.findReserveByDate(date)
+            }
+            return await this.mongoService.findReserveByDateAndStatus(date,status)
         }
         return await this.mongoService.findAllReserve()
     }
@@ -85,7 +90,13 @@ export class ReservationService {
     async searchReserveDetail(orderNo:string):Promise<DetailReserveObj>{
          let reserve = (await this.mongoService.findReserveByOrderNo(orderNo))[0]
          let guest = (await this.mongoService.findGuest(reserve.guestId))[0]
-         let table = (await this.mongoService.findTable(reserve.tableNo))[0]
+         let table:any = (await this.mongoService.findTable(reserve.tableNo))[0]
+         if(!table){
+            table = {
+                name:"this table disable",
+                size:""
+            }
+         }
          return{
             orderNo: reserve.orderNo,
             tableNo: reserve.tableNo,

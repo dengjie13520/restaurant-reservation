@@ -50,6 +50,16 @@ export class MongoService {
     return this.tableModel.find({'tableNo':tableNo}).exec();
   }
 
+  async deleteTable(tableNo:string){
+    this.tableModel.deleteOne({'tableNo':tableNo},(err,doc)=>{
+      if(err){
+        console.log(err)
+        return
+      }
+      console.log("doc:",doc)
+    });
+  }
+
   async createReserve(
     playLoad:{orderNo:string,guestId :string, tableNo:string,startTime:string,status:number}
     ):Promise<Reserve>{
@@ -78,8 +88,13 @@ export class MongoService {
   }
 
   async findReserveByDate(startTime:string):Promise<Reserve[]>{
-    return this.reserveModel.find({'startTime':startTime}).exec();
+    return this.reserveModel.find({'startTime':{$regex:startTime}}).exec();
   }
+
+  async findReserveByDateAndStatus(startTime:string,status:number):Promise<Reserve[]>{
+    return this.reserveModel.find({'status':status,'startTime':{$regex:startTime}}).exec();
+  }
+
 
   async findReserveByStatus(status:number):Promise<Reserve[]>{
     return this.reserveModel.find({'status':status}).exec();
