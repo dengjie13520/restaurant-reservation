@@ -37,6 +37,7 @@ mutation{
     registerAdmin
     registerGuest
     reserveTable
+    deleteTable
 }
 
 一般流程是：
@@ -47,8 +48,8 @@ mutation{
 5 guest登录获取token：login
 6 查询桌子：getTableList
 7 guest预定table：reserveTable
-8 guest更新reserve：reserveTable  只能关闭或恢复正常
-9 admin更新reserve：reserveTable  可以关闭或完成该订单或恢复正常
+8 guest更新reserve：reserveTable  
+9 admin更新reserve：reserveTable  
 
 注意：除了注册和登录，其他graphql都需要在headers里添加token到authorization，如下
 {
